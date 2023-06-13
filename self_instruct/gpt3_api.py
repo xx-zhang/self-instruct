@@ -6,13 +6,16 @@ import openai
 from datetime import datetime
 import argparse
 import time
-    
+
+# openai.api_base = "https://api.openai.com/v1"
+
 
 def make_requests(
         engine, prompts, max_tokens, temperature, top_p, 
         frequency_penalty, presence_penalty, stop_sequences, 
         logprobs, n, best_of, retries=3, 
-        api_key=None, organization=None
+        api_key=None, organization=None, 
+        api_base='https://sec-x.woa.com/v1', 
     ):
     response = None
     target_length = max_tokens
@@ -20,6 +23,8 @@ def make_requests(
         openai.api_key = api_key
     if organization is not None:
         openai.organization = organization
+    if api_base is not None:
+        openai.api_base = api_base
     retry_cnt = 0
     backoff_time = 30
     while retry_cnt <= retries:
@@ -27,15 +32,15 @@ def make_requests(
             response = openai.Completion.create(
                 engine=engine,
                 prompt=prompts,
-                max_tokens=target_length,
-                temperature=temperature,
-                top_p=top_p,
-                frequency_penalty=frequency_penalty,
-                presence_penalty=presence_penalty,
-                stop=stop_sequences,
-                logprobs=logprobs,
-                n=n,
-                best_of=best_of,
+                # max_tokens=target_length,
+                # temperature=temperature,
+                # top_p=top_p,
+                # frequency_penalty=frequency_penalty,
+                # presence_penalty=presence_penalty,
+                # stop=stop_sequences,
+                # logprobs=logprobs,
+                # n=n,
+                # best_of=best_of,
             )
             break
         except openai.error.OpenAIError as e:
@@ -52,6 +57,7 @@ def make_requests(
     if isinstance(prompts, list):
         results = []
         for j, prompt in enumerate(prompts):
+            print(response)
             data = {
                 "prompt": prompt,
                 "response": {"choices": response["choices"][j * n: (j + 1) * n]} if response else None,

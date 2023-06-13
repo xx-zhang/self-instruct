@@ -17,7 +17,7 @@ random.seed(42)
 
 
 def encode_prompt(prompt_instructions, classification=False):
-    """Encode multiple prompt instructions into a single string."""
+    """将多个instructions 合并成一个prompt."""
     if classification:
         prompt = "Come up with a series of classification tasks. Try to specify the possible output labels when possible.\n"
     else:
@@ -26,6 +26,7 @@ def encode_prompt(prompt_instructions, classification=False):
         instruction = re.sub(r"\s+", " ", instruction).strip().rstrip(":")
         prompt += f"{idx+1}. {instruction}\n"
     prompt += f"{len(prompt_instructions) + 1}."
+    prompt += "\n 请用中文回复。"
     return prompt
 
 
