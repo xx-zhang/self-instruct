@@ -2,6 +2,7 @@
 ###### Core dependencies #######
 ################################
 rouge-score
+# rouge_score==0.1.2
 tqdm
 numpy
 openai==0.24.0

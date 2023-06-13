@@ -10,7 +10,9 @@ import time
 
 def make_requests(
         engine, prompts, max_tokens, temperature, top_p, 
-        frequency_penalty, presence_penalty, stop_sequences, logprobs, n, best_of, retries=3, api_key=None, organization=None
+        frequency_penalty, presence_penalty, stop_sequences, 
+        logprobs, n, best_of, retries=3, 
+        api_key=None, organization=None
     ):
     response = None
     target_length = max_tokens

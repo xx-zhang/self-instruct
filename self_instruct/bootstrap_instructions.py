@@ -156,7 +156,7 @@ if __name__ == "__main__":
     if machine_instructions:
         progress_bar.update(len(machine_instructions))
 
-    with open(os.path.join(args.batch_dir, "machine_generated_instructions.jsonl"), "a") as fout:
+    with open(os.path.join(args.batch_dir, ".jsonl"), "a") as fout:
         while len(machine_instructions) < args.num_instructions_to_generate:
             batch_inputs = []
             for _ in range(args.request_batch_size):
